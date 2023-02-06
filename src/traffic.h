@@ -5,9 +5,9 @@
 
 const String baseUrl = "https://exceed-hardware-stamp465.koyeb.app";
 
-const String point = "กลุ่มที่";
-const int nearby_1 = "กลุ่มใกล้เคียง (กลุ่มที่ +-1)";
-const int nearby_2 = "กลุ่มใกล้เคียง (กลุ่มที่ +-1)";
+const String point = "2";
+const int nearby_1 = 1;
+const int nearby_2 = 3;
 
 void GET_traffic()
 {
@@ -18,28 +18,17 @@ void GET_traffic()
 
   Serial.println("Nearby traffic");
   int httpResponseCode = http.GET();
-  if (httpResponseCode == 200)
+  if (httpResponseCode >= 200 && httpResponseCode < 300)
   {
     String payload = http.getString();
     deserializeJson(doc, payload);
 
     // *** write your code here ***
     // set up JSON
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
-    // .
+    Serial.println();
+    Serial.println((const char*)doc[1]["point"]);
+    Serial.println((const char*)doc[1]["traffic"]);
+
   }
   else
   {
@@ -60,10 +49,8 @@ void POST_traffic(String led)
 
   DynamicJsonDocument doc(2048);
   // *** write your code here ***
-  // set up JSON
-  // .
-  // .
-  // .
+  doc["code"] = "zgam1";
+  doc["traffic"] = led;
   serializeJson(doc, json);
 
   Serial.println("POST " + led);
