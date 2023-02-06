@@ -37,21 +37,45 @@ void setup()
   POST_traffic("green");
 }
 
-void loop()
-{
+long int time0 = 0;
+long int time1 = 0;
+void loop(){
   // *** write your code here ***
   // Your can change everything that you want
-  if (state == 1)
-  {
+  debouncer.update();
+  bool btn_pressed=debouncer.fell();
+  if (state == 1){
     // while led GREEN
+    digitaWrite(green, HIGH);
+    if(btn_pressed){
+      state=2;
+      digitalWrite(green, LOW);
+      POST_traffic("yellow");
+      time0=millis();
+    }
   }
-  else if (state == 2)
-  {
+  else if (state == 2){
     // while led YELLOW
+    digitalWrite(yellow, HIGH);
+    if(millis()-time0>8000){
+      state=3;
+      digitalWrite(yellow, LOW);
+      POST_traffic("red");
+      time0=millis();
+    }
   }
-  else if (state == 3)
-  {
+  else if (state == 3){
     // while led RED
+    digitalWrite(red, HIGH);
+    if(millis()-time0>5000){
+      while(1){
+        
+      }
+      state=4;
+      digitalWrite(red, LOW);
+      POST_traffic("green");
+      time0=millis();
+    }
   }
 }
 
