@@ -45,7 +45,6 @@ void loop(){
     if (state == 1){
         // while led GREEN
         digitalWrite(green, HIGH);
-        Serial.println("greening");
         if(btn_pressed){
             state=2;
             digitalWrite(green, LOW);
@@ -56,7 +55,6 @@ void loop(){
     else if (state == 2){
         // while led YELLOW
         digitalWrite(yellow, HIGH);
-        Serial.println("yellowing");
         if(millis()-time0>8000){
             state=3;
             digitalWrite(yellow, LOW);
@@ -66,7 +64,6 @@ void loop(){
     }else if (state == 3){
         // while led RED
         digitalWrite(red, HIGH);
-        Serial.println("reding");
         if(millis()-time0>5000){
             while(1){
                 int light_value=map(analogRead(ldr),dim_light,4095,0,255);
@@ -81,8 +78,7 @@ void loop(){
     delay(1000/60);
 }
 
-void Connect_Wifi()
-{
+void Connect_Wifi(){
   const char *ssid = "OPPO_KUY";
   const char *password = "oppopass";
   WiFi.begin(ssid, password);
