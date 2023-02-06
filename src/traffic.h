@@ -20,14 +20,16 @@ void GET_traffic()
   int httpResponseCode = http.GET();
   if (httpResponseCode >= 200 && httpResponseCode < 300)
   {
+    Serial.print("HTTP ");
+    Serial.println(httpResponseCode);
     String payload = http.getString();
     deserializeJson(doc, payload);
 
     // *** write your code here ***
     // set up JSON
     Serial.println();
-    Serial.println((const char*)doc[1]["point"]);
-    Serial.println((const char*)doc[1]["traffic"]);
+    Serial.println((const char*)doc["all_traffic"][nearby_1]);
+    Serial.println((const char*)doc["all_traffic"][nearby_2]);
 
   }
   else
@@ -57,6 +59,8 @@ void POST_traffic(String led)
   int httpResponseCode = http.POST(json);
   if (httpResponseCode == 200)
   {
+    Serial.print("HTTP ");
+    Serial.println(httpResponseCode);
     Serial.print("Done");
     Serial.println();
   }
