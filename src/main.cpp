@@ -1,5 +1,3 @@
-// If you want to run in WOKWi
-// change pin and wifi
 #include <Arduino.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
@@ -71,16 +69,16 @@ void loop(){
                 int light_value=map(analogRead(ldr),dim_light,4095,0,255);
                 if(light_value<=0)break;
             }
-            state=0;
+            state=1;
             digitalWrite(red, LOW);
             POST_traffic("green");
             time0=millis();
         }
     }
+    delay(1000/60);
 }
 
-void Connect_Wifi()
-{
+void Connect_Wifi(){
   const char *ssid = "OPPO_KUY";
   const char *password = "oppopass";
   WiFi.begin(ssid, password);
