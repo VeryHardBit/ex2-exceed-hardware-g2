@@ -6,13 +6,13 @@
 #include <Bounce2.h>
 #include "traffic.h"
 
-#define red <led red pin>
-#define yellow <led yellow pin>
-#define green <led green pin>
-#define ldr <ldr pin>
-#define button <button pin>
+#define red 26
+#define yellow 25
+#define green 33
+#define ldr 32
+#define button 27
 
-#define light <แสดงมันมืด มีค่าเท่าไหร่>
+#define dim_light 3900
 
 int state = 1;
 int count = 0;
@@ -42,41 +42,41 @@ long int time1 = 0;
 void loop(){
   // *** write your code here ***
   // Your can change everything that you want
-  debouncer.update();
-  bool btn_pressed=debouncer.fell();
-  if (state == 1){
-    // while led GREEN
-    digitaWrite(green, HIGH);
-    if(btn_pressed){
-      state=2;
-      digitalWrite(green, LOW);
-      POST_traffic("yellow");
-      time0=millis();
+    debouncer.update();
+    bool btn_pressed=debouncer.fell();
+    if (state == 1){
+        // while led GREEN
+        digitalWrite(green, HIGH);
+        if(btn_pressed){
+            state=2;
+            digitalWrite(green, LOW);
+            POST_traffic("yellow");
+            time0=millis();
+        }
     }
-  }
-  else if (state == 2){
-    // while led YELLOW
-    digitalWrite(yellow, HIGH);
-    if(millis()-time0>8000){
-      state=3;
-      digitalWrite(yellow, LOW);
-      POST_traffic("red");
-      time0=millis();
+    else if (state == 2){
+        // while led YELLOW
+        digitalWrite(yellow, HIGH);
+        if(millis()-time0>8000){
+            state=3;
+            digitalWrite(yellow, LOW);
+            POST_traffic("red");
+            time0=millis();
+        }
+    }else if (state == 3){
+        // while led RED
+        digitalWrite(red, HIGH);
+        if(millis()-time0>5000){
+            while(1){
+                int light_value=map(analogRead(ldr),dim_light,4095,0,255);
+                if(light_value<=0)break;
+            }
+            state=0;
+            digitalWrite(red, LOW);
+            POST_traffic("green");
+            time0=millis();
+        }
     }
-  }
-  else if (state == 3){
-    // while led RED
-    digitalWrite(red, HIGH);
-    if(millis()-time0>5000){
-      while(1){
-        
-      }
-      state=4;
-      digitalWrite(red, LOW);
-      POST_traffic("green");
-      time0=millis();
-    }
-  }
 }
 
 void Connect_Wifi()
