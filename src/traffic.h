@@ -18,8 +18,7 @@ void GET_traffic()
 
   Serial.println("Nearby traffic");
   int httpResponseCode = http.GET();
-  if (httpResponseCode >= 200 && httpResponseCode < 300)
-  {
+  if (httpResponseCode >= 200 && httpResponseCode < 300) {
     Serial.print("HTTP ");
     Serial.println(httpResponseCode);
     String payload = http.getString();
@@ -28,9 +27,12 @@ void GET_traffic()
     // *** write your code here ***
     // set up JSON
     Serial.println();
-    Serial.println((const char*)doc["all_traffic"][nearby_1]);
-    Serial.println((const char*)doc["all_traffic"][nearby_2]);
-
+    Serial.println(nearby_1);
+    Serial.println((const char*)doc["all_traffic"][nearby_1]["traffic"]);
+    Serial.println();
+    Serial.println(nearby_2);
+    Serial.println((const char*)doc["all_traffic"][nearby_2]["traffic"]);
+   
   }
   else
   {
