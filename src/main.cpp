@@ -59,6 +59,7 @@ void loop(){
             state=3;
             digitalWrite(yellow, LOW);
             POST_traffic("red");
+            GET_traffic();
             time0=millis();
         }
     }else if (state == 3){
@@ -72,6 +73,7 @@ void loop(){
             state=1;
             digitalWrite(red, LOW);
             POST_traffic("green");
+            GET_traffic();
             time0=millis();
         }
     }
